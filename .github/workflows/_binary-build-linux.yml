@@ -199,17 +199,17 @@ jobs:
           git clean -fxd
         working-directory: builder
 
-      - name: Check if the job is disabled
-        id: filter
-        uses: ./pytorch/.github/actions/filter-test-configs
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          # NB: Use a mock test matrix with a default value here. After filtering, if the
-          # returned matrix is empty, it means that the job is disabled
-          test-matrix: |
-            { include: [
-              { config: "default" },
-            ]}
+      # - name: Check if the job is disabled
+      #   id: filter
+      #   uses: ./pytorch/.github/actions/filter-test-configs
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     # NB: Use a mock test matrix with a default value here. After filtering, if the
+      #     # returned matrix is empty, it means that the job is disabled
+      #     test-matrix: |
+      #       { include: [
+      #         { config: "default" },
+      #       ]}
 
       - name: Pull Docker image
         if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' }}
@@ -260,13 +260,13 @@ jobs:
           # Ensure the working directory gets chowned back to the current user
           docker run --rm -v "${RUNNER_TEMP}/artifacts:/v" -w /v "${ALPINE_IMAGE}" chown -R "$(id -u):$(id -g)" .
 
-      - uses: actions/upload-artifact@v3
-        if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' }}
-        with:
-          name: ${{ inputs.build_name }}
-          if-no-files-found: error
-          path:
-            ${{ runner.temp }}/artifacts/*
+      # - uses: actions/upload-artifact@v3
+      #   if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' }}
+      #   with:
+      #     name: ${{ inputs.build_name }}
+      #     if-no-files-found: error
+      #     path:
+      #       ${{ runner.temp }}/artifacts/*
 
       - name: Teardown Linux
         if: always()
