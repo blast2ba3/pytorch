@@ -218,7 +218,6 @@ jobs:
           docker-image: ${{ inputs.DOCKER_IMAGE }}
 
       - name: Build PyTorch binary
-        if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' }}
         run: |
           set -x
           mkdir -p artifacts/
@@ -254,7 +253,6 @@ jobs:
           fi
 
       - name: Chown artifacts
-        if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' }}
         shell: bash
         run: |
           # Ensure the working directory gets chowned back to the current user
