@@ -37,6 +37,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  print_conditions:
+    runs-on: self-hosted
+    steps:
+      - name: print env
+        shell: bash
+        run: |
+          echo ${{ github.repository_owner }}
   manywheel-py3_10-cpu-aarch64-build:
     if: ${{ github.repository_owner == 'pytorch' }}
     uses: ./.github/workflows/_binary-build-linux.yml
