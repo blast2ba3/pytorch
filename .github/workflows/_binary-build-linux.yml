@@ -182,7 +182,7 @@ jobs:
         run: |
           # Remove any artifacts from the previous checkouts
           git clean -fxd
-        working-directory: pytorch
+        working-directory: blast2ba3
 
       - name: Checkout pytorch/builder to builder dir
         uses: malfet/checkout@silent-checkout
